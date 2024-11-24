@@ -1,0 +1,9 @@
+<ul>
+  {{ repo.pushedAt.getFullYear() }} - {{ repo.name }} <br/>
+  @if (repo.fork) {
+    <p>Fork</p>
+  }
+  @for (language of repo.languages.nodes; track language.name) {
+    <span>{{ language.name }}</span>
+  }
+</ul>
