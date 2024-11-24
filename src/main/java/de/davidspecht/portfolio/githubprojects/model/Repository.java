@@ -6,8 +6,9 @@ public class Repository {
     private String id;
     private String name;
     private String pushedAt;
-    private String fork;
-    private List<Language> languages;
+    private boolean isFork;
+    private Languages languages;
+    private Language primaryLanguage;
 
     public String getId() {
         return id;
@@ -33,19 +34,27 @@ public class Repository {
         this.pushedAt = pushedAt;
     }
 
-    public String getFork() {
-        return fork;
+    public Language getPrimaryLanguage() {
+        return primaryLanguage;
     }
 
-    public void setFork(String fork) {
-        this.fork = fork;
+    public void setPrimaryLanguage(Language primaryLanguage) {
+        this.primaryLanguage = primaryLanguage;
     }
 
-    public List<Language> getLanguages() {
+    public Languages getLanguages() {
         return languages;
     }
 
-    public void setLanguages(List<Language> languages) {
+    public void setLanguages(Languages languages) {
         this.languages = languages;
+    }
+
+    public boolean isFork() {
+        return isFork;
+    }
+
+    public void setFork(boolean fork) {
+        isFork = fork;
     }
 }
