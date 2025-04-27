@@ -1,65 +1,35 @@
 import {Injectable} from '@angular/core';
 import {Apollo, gql, QueryRef} from 'apollo-angular';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 export interface Repo {
   "id": string,
   "name": string,
-  "pushedAt": Date,
+  "pushedAt": string,
   "fork": boolean,
+  "url": string,
   "languages": {
     "nodes": [
       {
         "name": string
+        "color": string
       }
     ]
   },
   "primaryLanguage": {
     "name": "Java"
+    "color": string
   }
 }
-
-export interface ReposResult {
-  repositories: {
-    nodes: Repo[];
-  }
-}
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReposService {
-  private reposQuery: QueryRef<{ repositoryOwner: ReposResult }, { login: string }>;
-
-  constructor(private apollo: Apollo) {
-    this.reposQuery = this.apollo.watchQuery({
-      query: gql`query ($login: String!){
-        query {
-          repositoryOwner(login: $login){
-            repositories(first: 100, orderBy: {field: UPDATED_AT, direction: DESC}) {
-              nodes {
-                id
-                name
-                pushedAt
-                fork
-                languages(first: 3, orderBy: {field: SIZE, direction: DESC}) {
-                  nodes {
-                    name
-                  }
-                }
-                primaryLanguage {
-                  name
-                }
-              }
-            }
-          }
-        }
-      }`
-    });
+  constructor(private http: HttpClient) {
   }
-
-  async getRepos(login: string): Promise<Repo[]> {
-    const result = await this.reposQuery.refetch({login});
-    return result.data.repositoryOwner.repositories.nodes;
+  getRepos(): Observable<{nodes: Repo[]}> {
+    return this.http.get<{nodes: Repo[]}>("api/projects");
   }
 }

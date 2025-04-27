@@ -6,6 +6,7 @@ public class Repository {
     private String id;
     private String name;
     private String pushedAt;
+    private String url;
     private boolean isFork;
     private Languages languages;
     private Language primaryLanguage;
@@ -56,5 +57,13 @@ public class Repository {
 
     public void setFork(boolean fork) {
         isFork = fork;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

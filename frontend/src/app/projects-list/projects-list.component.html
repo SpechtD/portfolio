@@ -1,6 +1,8 @@
 <li>
-  @for (repo of repos; track repo.id) {
-    <app-project-list-item [repo]="repo" />
+  @if (repos$ | async; as repos){
+    @for (repo of repos.nodes; track repo.id) {
+      <app-project-list-item [repo]="repo" />
+    }
   }
 </li>
 
